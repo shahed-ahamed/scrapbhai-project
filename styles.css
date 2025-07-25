@@ -47,6 +47,7 @@ body {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .footer {
@@ -211,13 +212,10 @@ body {
   padding: 40px 30px;
   border: 1px solid #c8e6c9;
   border-radius: 10px;
-  /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); */
   text-align: center;
-
-  /* Centering manually within page */
   max-width: 500px;
   margin: 100px auto;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
 }
 
 .thank-you-box h1 {
