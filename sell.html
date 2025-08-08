@@ -1,0 +1,40 @@
+<!-- sell.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sell Scrap - Scrap Bhai</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo"><i class="fas fa-recycle"></i> SCRAP <span>BHAI</span></div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="sell.html">Sell Scrap</a></li>
+        <li><a href="buy.html">Buy Scrap</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="register-section">
+      <h2>Sell Your Scrap</h2>
+      <form class="register-form" action="#" method="post" enctype="multipart/form-data">
+        <label for="type">Scrap Type</label>
+        <input type="text" id="type" name="type" placeholder="e.g., Metal, Plastic, Paper" required>
+
+        <label for="weight">Weight (in KG)</label>
+        <input type="number" id="weight" name="weight" placeholder="e.g., 5" required>
+
+        <label for="image">Upload Image</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
