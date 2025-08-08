@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cart - Scrap Bhai</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo"><i class="fas fa-recycle"></i> SCRAP <span>BHAI</span></div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="sell.html">Sell Scrap</a></li>
+        <li><a href="buy.html">Buy Scrap</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="cart-container">
+    <div class="cart-title">Your Scrap Cart</div>
+    <div id="cart-items"></div>
+    <div class="total-section" id="cart-total">Total: 0 tk</div>
+    <a href="payment.html" class="payment-btn">Proceed to Pay</a>
+  </div>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem("scrapCart")) || [];
+    const cartItemsContainer = document.getElementById("cart-items");
+    const cartTotal = document.getElementById("cart-total");
+
+    function renderCart() {
+      cartItemsContainer.innerHTML = "";
+      let total = 0;
+
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p class="empty-cart">Your cart is currently empty.</p>';
+        cartTotal.style.display = "none";
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        const itemTotal = item.pricePerKg * item.weight;
+        total += itemTotal;
+
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "cart-item";
+        itemDiv.innerHTML = `
+          <img src="${item.image}" alt="${item.type}">
+          <div class="item-details">
+            <p><strong>Type:</strong> ${item.type}</p>
+            <p><strong>Weight:</strong> ${item.weight} kg</p>
+            <p><strong>Price per KG:</strong> ${item.pricePerKg} tk</p>
+          </div>
+          <div>
+            <strong>${itemTotal} tk</strong><br>
+            <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+          </div>
+        `;
+        cartItemsContainer.appendChild(itemDiv);
+      });
+
+      cartTotal.textContent = `Total: ${total} tk`;
+      cartTotal.style.display = "block";
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("scrapCart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>

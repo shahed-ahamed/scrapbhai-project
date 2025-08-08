@@ -1,4 +1,3 @@
-<!-- buy.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +14,7 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="sell.html">Sell Scrap</a></li>
         <li><a href="buy.html">Buy Scrap</a></li>
+        <li><a href="cart.html" class="view-cart-btn">🛒 View Cart</a></li>
       </ul>
     </nav>
   </header>
@@ -23,40 +23,62 @@
     <section class="scrap-categories">
       <h2>Available Scrap Items</h2>
       <div class="category-grid">
-          <div class="product-card">
-        <img src="buy_scrap/metal.jpg" alt=" Metal Scrap Image" style="width:80px; height:80px; margin-bottom:8px;">
-        <p><strong>Type:</strong> Metal Scrap</p>
-        <p><strong>Weight:</strong> 15 kg</p>
-        <button class="add-to-cart">Add to Cart</button>
-      </div>
+        <div class="product-card">
+          <img src="buy_scrap/metal.jpg" alt="Metal Scrap" style="width:80px; height:80px; margin-bottom:8px;">
+          <p><strong>Type:</strong> Metal Scrap</p>
+          <p><strong>Weight:</strong> 15</p>
+          <p><strong>Per KG:</strong> 40</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
 
-      <div class="product-card">
-        <img src="buy_scrap/plastic.jpg" alt="Plastic Scrap Image" style="width:80px; height:80px; margin-bottom:8px;">
-        <p><strong>Type:</strong> Plastic Scrap</p>
-        <p><strong>Weight:</strong> 10 kg</p>
-        <p><strong>Per KG:</strong> 25 tk</p>
-        <button class="add-to-cart">Add to Cart</button>
-      </div>
-      
-      <div class="product-card">
-        <img src="buy_scrap/cardboard.jpg" alt="Paper Scrap Image" style="width:80px; height:80px; margin-bottom:8px;">
-        <p><strong>Type:</strong>Cardboard</p>
-        <p><strong>Weight:</strong> 60 kg</p>
-        <p><strong>Per KG:</strong> 30 tk</p>
-        <button class="add-to-cart">Add to Cart</button>
-      </div>
+        <div class="product-card">
+          <img src="buy_scrap/plastic.jpg" alt="Plastic Scrap" style="width:80px; height:80px; margin-bottom:8px;">
+          <p><strong>Type:</strong> Plastic Scrap</p>
+          <p><strong>Weight:</strong> 10</p>
+          <p><strong>Per KG:</strong> 25</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
 
-      <div class="product-card">
-        <img src="buy_scrap/electronic.jpg" alt="Electronic Scrap Image" style="width:80px; height:80px; margin-bottom:8px;">
-        <p><strong>Type:</strong>Electronic Scrap</p>
-        <p><strong>Weight:</strong>50 kg</p>
-        <p><strong>Per KG:</strong> 60 tk</p>
-        <button class="add-to-cart">Add to Cart</button>
-      </div>
-        <!-- Add more product cards here -->
-        
+        <div class="product-card">
+          <img src="buy_scrap/cardboard.jpg" alt="Cardboard" style="width:80px; height:80px; margin-bottom:8px;">
+          <p><strong>Type:</strong> Cardboard</p>
+          <p><strong>Weight:</strong> 60</p>
+          <p><strong>Per KG:</strong> 30</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+          <img src="buy_scrap/electronic.jpg" alt="Electronic Scrap" style="width:80px; height:80px; margin-bottom:8px;">
+          <p><strong>Type:</strong> Electronic Scrap</p>
+          <p><strong>Weight:</strong> 50</p>
+          <p><strong>Per KG:</strong> 60</p>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
       </div>
     </section>
   </main>
+
+  <script>
+    const buttons = document.querySelectorAll(".add-to-cart");
+
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        const card = button.parentElement;
+        const type = card.querySelector("p:nth-of-type(1)").textContent.split(":")[1].trim();
+        const weight = parseFloat(card.querySelector("p:nth-of-type(2)").textContent.split(":")[1]);
+        const perKg = parseFloat(card.querySelector("p:nth-of-type(3)").textContent.split(":")[1]);
+        const image = card.querySelector("img").getAttribute("src");
+
+        const item = { type, weight, perKg, image };
+
+        let cart = JSON.parse(localStorage.getItem("scrapCart")) || [];
+        cart.push(item);
+        localStorage.setItem("scrapCart", JSON.stringify(cart));
+
+        alert(`${type} added to cart!`);
+      });
+    });
+  </script>
 </body>
 </html>
+
