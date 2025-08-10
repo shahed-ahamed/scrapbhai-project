@@ -1,4 +1,13 @@
 <?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "scrapbhai";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 $nameErr = $emailErr = $phoneErr = $passErr = $confirmPassErr = "";
 $name = $email = $phone = "";
@@ -7,7 +16,6 @@ $successMsg = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $valid = true;
 
-  
     if (empty($_POST["name"])) {
         $nameErr = "Name is required";
         $valid = false;
@@ -19,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-   
     if (empty($_POST["email"])) {
         $emailErr = "Email is required";
         $valid = false;
@@ -31,7 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    
     if (empty($_POST["phone"])) {
         $phoneErr = "Phone number is required";
         $valid = false;
@@ -43,38 +49,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-  
     if (empty($_POST["password"])) {
         $passErr = "Password is required";
         $valid = false;
     } else {
-        $password = $_POST["password"];
-        if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/', $password)) {
+        $passwordInput = $_POST["password"];
+        if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/', $passwordInput)) {
             $passErr = "Password must be at least 8 chars with uppercase, lowercase, number & special char";
             $valid = false;
         }
     }
 
-   
     if (empty($_POST["confirm-password"])) {
         $confirmPassErr = "Confirm Password is required";
         $valid = false;
     } else {
         $confirm_password = $_POST["confirm-password"];
-        if (isset($password) && $confirm_password !== $password) {
+        if (isset($passwordInput) && $confirm_password !== $passwordInput) {
             $confirmPassErr = "Passwords do not match";
             $valid = false;
         }
     }
 
     if ($valid) {
-        
+        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
 
-        $successMsg = "Registration successful!";
-        $name = $email = $phone = "";
+        if ($stmt->num_rows > 0) {
+            $emailErr = "Email already registered";
+        } else {
+            $stmt->close();
+
+            $hashedPass = password_hash($passwordInput, PASSWORD_DEFAULT);
+
+            $stmt = $conn->prepare("INSERT INTO users (name, email, phone, password) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("ssss", $name, $email, $phone, $hashedPass);
+
+            if ($stmt->execute()) {
+                $successMsg = "Registration successful!";
+                $name = $email = $phone = "";
+            } else {
+                $successMsg = "Error: " . $conn->error;
+            }
+            $stmt->close();
+        }
     }
 }
 
+$conn->close();
 
 function errorClass($error) {
     return $error ? "input-error" : "";
