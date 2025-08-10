@@ -237,8 +237,9 @@ function errorClass($error) {
 
     <button type="submit">Register</button>
   </form>
-  <p class="login-link">Already have an account? <a href="login.html">Login here</a></p>
+  <p class="login-link">Already have an account? <a href="login.php">Login here</a></p>
 </section>
 
 </body>
 </html>
+
