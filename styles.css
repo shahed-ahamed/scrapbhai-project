@@ -163,7 +163,32 @@ body {
   color: #333;
 }
 
+.register-form button {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, #2e7d32, #43a047);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(46, 125, 50, 0.3);
+  transition: all 0.3s ease;
+}
 
+.register-form button:hover {
+  background: linear-gradient(135deg, #1b5e20, #2e7d32);
+  box-shadow: 0 6px 12px rgba(27, 94, 32, 0.4);
+  transform: translateY(-2px);
+}
+
+.register-form button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 6px rgba(27, 94, 32, 0.3);
+}
 
 .buy-btn,
 .sell-btn {
